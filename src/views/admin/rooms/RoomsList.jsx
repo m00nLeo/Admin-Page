@@ -2,31 +2,24 @@ import React from "react";
 import { TfiPencil } from "react-icons/tfi";
 import { FiTrash } from "react-icons/fi";
 import { AiOutlineSearch } from "react-icons/ai";
-import {HiOutlineChevronLeft } from "react-icons/hi";
+import { HiOutlineChevronLeft } from "react-icons/hi";
 import { HiOutlineChevronRight } from "react-icons/hi";
 
 const RoomsList = () => {
   return (
     <div className="max-auto mx-h-screen-xl">
       <div className="flex justify-between">
-      <button className="relative border-2 w-32 h-10 mt-6 ml-6 mb-6">
-     <span className="absolute text-gray-400 bottom-0.5 left-3  flex justify-content  gap-3 text-3xl ">
-      <AiOutlineSearch className="mt-4"/>
-      .......
-     </span>
-      </button>
-      
+        <button className="relative border-2 w-32 h-10 mt-6 ml-6 mb-6">
+          <span className="absolute text-gray-400 bottom-0.5 left-3  flex justify-content  gap-3 text-3xl ">
+            <AiOutlineSearch className="mt-4" />
+            .......
+          </span>
+        </button>
 
-      
         <button className="text-white bg-cyan-300 border w-32 h-10 mt-6 mr-6">
           Add New
         </button>
       </div>
-      
-      
-     
-
-      
 
       <div className="relative px-6 overflow-x-auto mb-6">
         <table className="w-full text-sm  text-left">
@@ -212,22 +205,19 @@ const RoomsList = () => {
                 <div></div>
               </td>
               <td className="px-6 py-4">
-                <div className="">
-                  1-9 of 11
-                </div>
+                <div className="">1-9 of 11</div>
               </td>
               <td className="px-6 py-4">
                 <div className="flex text-xl text-gray-500 gap-4 hover:text-black">
-                <HiOutlineChevronLeft/> <HiOutlineChevronRight/>
+                  <HiOutlineChevronLeft /> <HiOutlineChevronRight />
                 </div>
               </td>
             </tr>
-           
           </tbody>
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RoomsList
+export default RoomsList;
