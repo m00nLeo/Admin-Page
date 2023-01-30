@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-// import RootLayout from "../components/layouts/RootLayout";
+import RootLayout from "../components/layouts/RootLayout";
 import Login from "../views/Login";
 import Overview from "../views/admin/Overview";
 import RoomsList from "../views/admin/rooms/RoomsList";
@@ -11,7 +11,7 @@ import GuessOderDetail from "../views/admin/orders/GuessOderDetail";
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <RootLayout />,
+    element: <RootLayout />,
     children: [
       {
         path: "/",
