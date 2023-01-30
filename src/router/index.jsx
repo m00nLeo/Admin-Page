@@ -1,35 +1,45 @@
 import { createBrowserRouter } from "react-router-dom";
-// import RootLayout from "../components/layouts/RootLayout";
-import AdminOrders from "../views/adminhome/AdminOrders";
-import AdminRooms from "../views/adminhome/AdminRooms";
-import AdminUsers from "../views/adminhome/AdminUsers";
+import RootLayout from "../components/layouts/RootLayout";
 import Login from "../views/Login";
-import AdminOverview from "../views/adminhome/AdminOrders";
+import Overview from "../views/admin/Overview";
+import RoomsList from "../views/admin/rooms/RoomsList";
+import AddNewRoom from "../views/admin/rooms/AddNewRoom";
+import UpdateRoom from "../views/admin/rooms/UpdateRoom";
+import Orders from "../views/admin/orders/Orders";
+import GuessOderDetail from "../views/admin/orders/GuessOderDetail";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <RootLayout />,
+    element: <RootLayout />,
     children: [
       {
         path: "/",
         element: <Login />,
       },
       {
-        path: "/adminoverview",
-        element: <AdminOverview />,
+        path: "/overview",
+        element: <Overview />,
       },
       {
-        path: "/adminrooms",
-        element: <AdminRooms />,
+        path: "/roomslist",
+        element: <RoomsList />,
       },
       {
-        path: "/adminusers",
-        element: <AdminUsers />,
+        path: "/roomslist/addnew",
+        element: <AddNewRoom />,
       },
       {
-        path: "/adminorders",
-        element: <AdminOrders />,
+        path: "/roomslist/update/:roomid",
+        element: <UpdateRoom />,
+      },
+      {
+        path: "/orders",
+        element: <Orders />,
+      },
+      {
+        path: "/orders/:roomid",
+        element: <GuessOderDetail />,
       },
     ],
   },
