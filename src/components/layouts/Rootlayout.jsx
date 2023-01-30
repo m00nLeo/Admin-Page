@@ -3,13 +3,17 @@ import NavMenu from "../common/NavMenu";
 
 const RootLayout = () => {
   return (
-    <div>
-      <NavMenu />
+    <div className="grow-0">
+      <div className="flex w-screen">
+        <div>
+          <NavMenu />
+        </div>
 
-      {/*children */}
-      <main>
-        <Outlet />
-      </main>
+        {/*children */}
+        <main>
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

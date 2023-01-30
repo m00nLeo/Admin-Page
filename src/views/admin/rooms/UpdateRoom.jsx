@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const UpdateRoom = () => {
   return (
@@ -6,4 +6,4 @@ const UpdateRoom = () => {
   )
 }
 
-export default UpdateRoom
+export default UpdateRoom;
