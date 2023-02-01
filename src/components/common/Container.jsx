@@ -1,6 +1,6 @@
-const Container = ({ fluid = false, children }) => {
+const Container = ({ fluid = true, children }) => {
     return (
-      <div className={fluid ? "mx-auto px-4 max-w-xl md:max-w-2xl lg:max-w-screen-xl" : "mx-auto  max-w-screen-xl px-4"}>
+      <div className={fluid ? "mx-auto w-5/6 fixed" : "mx-auto w-5/6"}>
         {children}
       </div>
     );
