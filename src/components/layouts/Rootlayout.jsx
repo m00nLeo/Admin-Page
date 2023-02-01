@@ -3,11 +3,9 @@ import NavMenu from "../common/NavMenu";
 
 const RootLayout = () => {
   return (
-    <div className="grow-0">
-      <div className="flex w-screen">
-        <div>
-          <NavMenu />
-        </div>
+    <div className="container">
+      <div className="flex">
+        <NavMenu />
 
         {/*children */}
         <main>
