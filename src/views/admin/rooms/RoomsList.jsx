@@ -1,222 +1,246 @@
 import React from "react";
 import { TfiPencil } from "react-icons/tfi";
 import { FiTrash } from "react-icons/fi";
-import { AiOutlineSearch } from "react-icons/ai";
-import { HiOutlineChevronLeft } from "react-icons/hi";
-import { HiOutlineChevronRight } from "react-icons/hi";
+import {
+  HiOutlineChevronLeft,
+  HiOutlineChevronRight,
+  HiSearch,
+} from "react-icons/hi";
 import Container from "../../../components/common/Container";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import GlobalSpinner from "../../../components/common/GlobalSpinner";
+import { getProducts } from "../../../../services/productService";
+import { useQuery } from "@tanstack/react-query";
 
 const RoomsList = () => {
-  return (
-    <div className="">
-      <Container>
-        <div className="flex justify-between">
-          <button className="relative border-2 w-32 h-10 mt-6 ml-6 mb-6">
-            <span className="absolute text-gray-400 bottom-0.5 left-3  flex justify-content  gap-3 text-3xl ">
-              <AiOutlineSearch className="mt-4" />
-              .......
-            </span>
-          </button>
+  const { data, isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => getProducts(),
+    cacheTime: 10 * 1000,
+  });
+  if (isLoading) return <GlobalSpinner />;
 
-          <button className="text-white bg-cyan-300 border w-32 h-10 mt-6 mr-6">
+  const { data: rooms } = data;
+  const room = rooms?.products;
+  console.log(room);
+  // const [orders, setOrders] = useState([...room]);
+
+  // const totalOrders = orders.length;
+  // const [currentPage, setCurrentPage] = useState(1);
+
+  // const ordersPerPage = 10;
+
+  // const totalPage = Math.ceil(totalOrders / ordersPerPage);
+
+  // const handleClick = (isBack) => {
+  //   if (isBack) {
+  //     if (currentPage >= 2) {
+  //       setCurrentPage(currentPage - 1);
+  //     }
+  //   } else {
+  //     {
+  //       if (currentPage < totalPage) {
+  //         setCurrentPage(currentPage + 1);
+  //       }
+  //     }
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const crrPageIndex = currentPage - 1;
+  //   const startIndex = crrPageIndex * ordersPerPage;
+  //   console.log(startIndex);
+  //   console.log(
+  //     orders.slice(
+  //       (currentPage - 1) * ordersPerPage,
+  //       (currentPage - 1) * ordersPerPage + ordersPerPage
+  //     )
+  //   );
+  // }, [currentPage]);
+
+  const onSearch = (e) => {
+    e.preventDefault();
+    let keyword = document.getElementById("search-area").value;
+    if (!keyword || keyword.length === 0) {
+      setOrders(orderData);
+      return;
+    }
+    keyword = keyword.toLowerCase();
+
+    let filters = Object.keys(orderData[0]);
+
+    //--------Search
+    var filtered_data = orderData.filter(function (item) {
+      for (let i = 0; i < filters.length; i++) {
+        switch (typeof item[filters[i]]) {
+          case "string":
+            if (item[filters[i]].toLowerCase().includes(keyword)) {
+              return true;
+            }
+            break;
+          default:
+            if (item[filters[i]] == keyword) {
+              return true;
+            }
+        }
+      }
+      return false;
+    });
+    setOrders(filtered_data);
+    setCurrentPage(1);
+  };
+  return (
+    <div className=" pl-2 py-6">
+      <Container>
+        {/* ACCOUNT INFO */}
+        <div className="flex items-center justify-end -translate-x-6">
+          <span className=" text-sm font-bold text-teal-600 border-l-gray-200 border-l-2 px-4">
+            Rosie P
+          </span>
+          <div>
+            <img
+              src="https://i.pinimg.com/280x280_RS/e9/1d/06/e91d062f1c0708a9b1f0f1880a3d8f19.jpg"
+              alt="profilepic"
+              className=" aspect-square w-10 rounded-full border-spacing-2 p-[2px] border-slate-200 border-2"
+            />
+          </div>
+        </div>
+        <div className="flex justify-between items-center mb-10">
+          <div className="mb-4">
+            <form className="flex items-center pl-6">
+              <label htmlFor="search-area" className="sr-only">
+                Search
+              </label>
+              <div className="relative max-w-screen-sm">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 ">
+                  <HiSearch className="text-xl" />
+                </div>
+                <input
+                  type="text"
+                  id="search-area"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5 "
+                  placeholder="Search"
+                  required
+                />
+              </div>
+              <button
+                onClick={onSearch}
+                className="p-2.5 ml-2 text-sm font-medium text-white bg-teal-600 rounded-lg hover:cursor-pointer hover:bg-teal-500/50 focus:ring-4 focus:outline-none focus:ring-teal-300"
+              >
+                <HiSearch className="text-xl" />
+                <span className="sr-only">Search</span>
+              </button>
+            </form>
+          </div>
+
+          <Link
+            to="/roomslist/addnew"
+            className="text-white text-center p-1 bg-teal-600 rounded-lg cursor-pointer hover:bg-teal-500/50 border w-32 h-10 mr-6"
+          >
             Add New
-          </button>
+          </Link>
         </div>
 
-        <div className="relative px-6 overflow-x-auto mb-6">
-          <table className="w-full text-sm  text-left">
-            <thead className="text-xs text-gray-400 uppercase">
-              <tr className="px-6 py-3 border  ">
-                <th className="px-6 py-3 ">name</th>
-                <th className=" px-14 py-3 ">Room infomation</th>
+        <div className=" px-6 ">
+          <table className="w-full text-sm table table-compact">
+            <thead className="text-base bg- text-gray-600 dark:text-zinc-200 uppercase">
+              <tr className="px-6 py-3 border">
+                <th className="px-6 py-3">Name</th>
+                <th className="px-6 py-3">Room infomation</th>
                 <th className="px-6 py-3">Price</th>
                 <th className="px-6 py-3">Status</th>
                 <th className="px-6 py-3">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border">
-                <td className="px-6 py-4">
-                  <div>Name</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>1 King Bed / 2 Single Beds</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>$20</div>
-                </td>
-                <td className="px-6 py-4 ">
-                  <div className="border text-center text-red-600 bg-red-200">
-                    Booked
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-4">
-                    <TfiPencil />
-                    <FiTrash />
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="bg-white border">
-                <td className="px-6 py-4">
-                  <div>Name</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>1 King Bed / 2 Single Beds</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>$20</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className=" border text-center text-lime-600 bg-lime-200">
-                    Checkin
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-4">
-                    <TfiPencil />
-                    <FiTrash />
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="bg-white border">
-                <td className="px-6 py-4">
-                  <div>Name</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>1 King Bed / 3 Single Beds</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>$20</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="border text-center text-red-600 bg-red-200">
-                    Booked
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-4">
-                    <TfiPencil />
-                    <FiTrash />
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="bg-white border">
-                <td className="px-6 py-4">
-                  <div>Name</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>2 King Bed / 3 Single Beds</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>$20</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="border text-center text-orange-300 bg-orange-100 ">
-                    Booked
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-4">
-                    <TfiPencil />
-                    <FiTrash />
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="bg-white border">
-                <td className="px-6 py-4">
-                  <div>Name</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>2 King Bed / 1 Single Beds</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>$20</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="border text-center text-red-600 bg-red-200">
-                    Checkout
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-4">
-                    <TfiPencil />
-                    <FiTrash />
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="bg-white border">
-                <td className="px-6 py-4">
-                  <div>Name</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>2 King Bed / 1 Single Beds</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>$20</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className=" border text-center text-lime-600 bg-lime-200">
-                    Booked
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-4">
-                    <TfiPencil />
-                    <FiTrash />
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="bg-white border">
-                <td className="px-6 py-4">
-                  <div>Name</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>1 King Bed / 2 Single Beds</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div>$20</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="border text-center text-orange-300 bg-orange-100 ">
-                    Checkin
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex gap-4">
-                    <TfiPencil />
-                    <FiTrash />
-                  </div>
-                </td>
-              </tr>
-
-              <tr className="bg-white border">
-                <td className="px-6 py-4">
-                  <div></div>
-                </td>
-                <td className="px-6 py-4">
-                  <div></div>
-                </td>
-                <td className="px-6 py-4">
-                  <div></div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="">1-9 of 11</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="flex text-xl text-gray-500 gap-4 hover:text-black">
-                    <HiOutlineChevronLeft /> <HiOutlineChevronRight />
-                  </div>
-                </td>
-              </tr>
+              {room?.map((item) => (
+                <tr className="bg-white border" key={item.id}>
+                  <td className="px-6 py-4 font-semibold">
+                    <div>{item.title}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div>{item.bed}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div>${item.price}</div>
+                  </td>
+                  <td className="px-6 py-4 ">
+                    <div className="border text-center text-amber-600 bg-pink-200">
+                      Pending
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex gap-4">
+                      <div className="group">
+                        <div
+                          className="hidden tooltip tooltip-open tooltip-success group-hover:block"
+                          data-tip="Room Detail"
+                        ></div>
+                        <Link to="/roomslist/update/:roomid">
+                          <TfiPencil className="cursor-pointer text-2xl text-teal-500 " />
+                        </Link>
+                      </div>
+                      <div className="group">
+                        <div
+                          className="hidden tooltip tooltip-open tooltip-error group-hover:block"
+                          data-tip="Delete"
+                        ></div>
+                        <FiTrash className="cursor-pointer text-xl text-red-500" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+          {/* PAGINATION */}
+          <div className="bg-white border w- flex justify-end gap-8 pr-14">
+            <div className="px-6 py-4">
+              <div className="">
+                1-{room?.length} of {room?.length}
+              </div>
+            </div>
+            <td className="px-6 py-4 flex gap-2">
+              <div className="flex text-xl text-gray-500 gap-4 hover:text-black cursor-pointer">
+                <HiOutlineChevronLeft />
+              </div>
+              <div className="flex text-xl text-gray-500 gap-4 hover:text-black cursor-pointer">
+                <HiOutlineChevronRight />
+              </div>
+            </td>
+          </div>
+          {/* PAGINATION */}
+          {/* <div className="flex justify-end gap-8 p-4 ">
+            <span className="text-sm text-zinc-500 pr-4">
+              {(currentPage - 1) * ordersPerPage + 1} -{" "}
+              {(currentPage - 1) * ordersPerPage + ordersPerPage} of{" "}
+              {totalOrders}
+            </span>
+            <div className="flex gap-4 group">
+              <IoIosArrowBack
+                onClick={() => {
+                  handleClick(true);
+                }}
+                className={`text-xl group-hover:cursor-pointer ${
+                  currentPage === 1
+                    ? "text-gray-400 dark:text-gray-500/70 group-hover:cursor-not-allowed"
+                    : ""
+                } `}
+              />
+              <IoIosArrowForward
+                onClick={() => {
+                  handleClick(false);
+                }}
+                className={`text-xl group-hover:cursor-pointer ${
+                  currentPage === totalPage
+                    ? "text-gray-400 dark:text-gray-500/70 group-hover:cursor-not-allowed"
+                    : ""
+                } `}
+              />
+            </div>
+          </div> */}
         </div>
       </Container>
     </div>
