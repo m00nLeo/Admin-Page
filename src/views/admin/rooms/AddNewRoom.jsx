@@ -35,7 +35,7 @@ const AddNewRoom = () => {
         </div>
         <div>
           <div className="px-4 py-12">
-            <div className="border border-b-4 w-full px-4 py-1">
+            <div className="border border-b-4 w-full px-4 py-1 text-xl font-semibold">
               Add New Room
             </div>
           </div>
@@ -71,14 +71,14 @@ const AddNewRoom = () => {
               type="file"
               placeholder="CLICK"
             />
-            
           </div>
         </div>
 
         <div className="py-6 flex justify-end w-2/4">
-          <button className=" border  bg-teal-500 text-white  w-24 h-12 flex items-center justify-center ">
-            Send
-          </button>
+          <input
+            type="submit"
+            className=" border cursor-pointer rounded-md bg-teal-600 hover:bg-teal-700 text-white  w-24 h-12 flex items-center justify-center "
+          />  
         </div>
       </div>
     </Container>

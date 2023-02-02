@@ -132,74 +132,73 @@ const orderData = [
 ];
 
 const Orders = () => {
+  const [orders, setOrders] = useState([...orderData]);
+  const totalOrders = orders.length;
 
-    const [orders, setOrders] = useState([...orderData]);
-    const totalOrders = orders.length;
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 10;
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const ordersPerPage = 10;
+  const totalPage = Math.ceil(totalOrders / ordersPerPage);
 
-    const totalPage = Math.ceil(totalOrders / ordersPerPage);
-
-    const handleClick = (isBack) => {
-      if (isBack) {
-        if (currentPage >= 2) {
-          setCurrentPage(currentPage - 1);
-        }
-      } else {
-        {
-          if (currentPage < totalPage) {
-            setCurrentPage(currentPage + 1);
-          }
+  const handleClick = (isBack) => {
+    if (isBack) {
+      if (currentPage >= 2) {
+        setCurrentPage(currentPage - 1);
+      }
+    } else {
+      {
+        if (currentPage < totalPage) {
+          setCurrentPage(currentPage + 1);
         }
       }
-    };
+    }
+  };
 
-    useEffect(() => {
-      const crrPageIndex = currentPage - 1;
-      const startIndex = crrPageIndex * ordersPerPage;
-      console.log(startIndex);
-      console.log(
-        orders.slice(
-          (currentPage - 1) * ordersPerPage,
-          (currentPage - 1) * ordersPerPage + ordersPerPage
-        )
-      );
+  useEffect(() => {
+    const crrPageIndex = currentPage - 1;
+    const startIndex = crrPageIndex * ordersPerPage;
+    console.log(startIndex);
+    console.log(
+      orders.slice(
+        (currentPage - 1) * ordersPerPage,
+        (currentPage - 1) * ordersPerPage + ordersPerPage
+      )
+    );
 
-      // setOrders(orders.slice(startIndex, startIndex + ordersPerPage));
-    }, [currentPage]);
+    // setOrders(orders.slice(startIndex, startIndex + ordersPerPage));
+  }, [currentPage]);
 
-    const onSearch = (e) => {
-      e.preventDefault();
-      let keyword = document.getElementById("search-area").value;
-      if (!keyword || keyword.length === 0) {
-        setOrders(orderData);
-        return;
-      }
-      keyword = keyword.toLowerCase();
+  const onSearch = (e) => {
+    e.preventDefault();
+    let keyword = document.getElementById("search-area").value;
+    if (!keyword || keyword.length === 0) {
+      setOrders(orderData);
+      return;
+    }
+    keyword = keyword.toLowerCase();
 
-      let filters = Object.keys(orderData[0]);
+    let filters = Object.keys(orderData[0]);
 
-      //--------Search
-      var filtered_data = orderData.filter(function (item) {
-        for (let i = 0; i < filters.length; i++) {
-          switch (typeof item[filters[i]]) {
-            case "string":
-              if (item[filters[i]].toLowerCase().includes(keyword)) {
-                return true;
-              }
-              break;
-            default:
-              if (item[filters[i]] == keyword) {
-                return true;
-              }
-          }
+    //--------Search
+    var filtered_data = orderData.filter(function (item) {
+      for (let i = 0; i < filters.length; i++) {
+        switch (typeof item[filters[i]]) {
+          case "string":
+            if (item[filters[i]].toLowerCase().includes(keyword)) {
+              return true;
+            }
+            break;
+          default:
+            if (item[filters[i]] == keyword) {
+              return true;
+            }
         }
-        return false;
-      });
-      setOrders(filtered_data);
-      setCurrentPage(1);
-    };
+      }
+      return false;
+    });
+    setOrders(filtered_data);
+    setCurrentPage(1);
+  };
 
   return (
     <div>
@@ -209,6 +208,33 @@ const Orders = () => {
           {/* Layout */}
           <div>
             {/* Content */}
+            {/* Modal*/}
+            <input type="checkbox" id="my-modal" className="modal-toggle" />
+            <div className="modal">
+              <div className="modal-box text-center bg-orange-200 text-black">
+                <h3 className="font-bold text-lg ">
+                  Are you sure you want to delete this item?{" "}
+                </h3>
+                <p className="py-4">
+                  You are about to delete this file from all of your backups!
+                  Deleting this item form this directory cannot be undone.
+                </p>
+                <div className="modal-action">
+                  <label
+                    htmlFor="my-modal"
+                    className="bg-red-400 p-2 rounded-lg hover:bg-red-300 cursor-pointer w-28"
+                  >
+                    Yes, I'm sure
+                  </label>
+                  <label
+                    htmlFor="my-modal"
+                    className="bg-gray-400 p-2 rounded-lg hover:bg-gray-300 cursor-pointer w-28"
+                  >
+                    Nope
+                  </label>
+                </div>
+              </div>
+            </div>
             {/* ACCOUNT INFO */}
             <div className="flex items-center justify-end">
               <span className=" text-sm font-bold text-teal-600 border-l-gray-200 border-l-2 px-4">
@@ -297,7 +323,9 @@ const Orders = () => {
                                     className="hidden tooltip tooltip-open tooltip-error group-hover:block"
                                     data-tip="Delete"
                                   ></div>
-                                  <BsTrash className="cursor-pointer text-xl text-red-500" />
+                                  <label htmlFor="my-modal">
+                                    <BsTrash className="cursor-pointer text-xl text-red-500" />
+                                  </label>
                                 </div>
                               </div>
                             </td>
