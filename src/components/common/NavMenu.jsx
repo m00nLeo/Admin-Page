@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 const NavMenu = () => {
   let location = useLocation();
+  const cookie = JSON.parse(localStorage.getItem("login"));
+  // console.log(cookie);
   if (location.pathname === "/") {
     return <></>;
   } else if (location.pathname === "/orders/:roomid") {

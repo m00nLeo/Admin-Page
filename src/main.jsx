@@ -6,7 +6,7 @@ import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "https://server-hotel.onrender.com";
 
 const queryClient = new QueryClient();
 
