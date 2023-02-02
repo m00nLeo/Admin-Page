@@ -133,73 +133,73 @@ const orderData = [
 
 const Orders = () => {
 
-  const [orders, setOrders] = useState([...orderData]);
-  const totalOrders = orders.length;
+    const [orders, setOrders] = useState([...orderData]);
+    const totalOrders = orders.length;
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 10;
+    const [currentPage, setCurrentPage] = useState(1);
+    const ordersPerPage = 10;
 
-  const totalPage = Math.ceil(totalOrders / ordersPerPage);
+    const totalPage = Math.ceil(totalOrders / ordersPerPage);
 
-  const handleClick = (isBack) => {
-    if (isBack) {
-      if (currentPage >= 2) {
-        setCurrentPage(currentPage - 1);
-      }
-    } else {
-      {
-        if (currentPage < totalPage) {
-          setCurrentPage(currentPage + 1);
+    const handleClick = (isBack) => {
+      if (isBack) {
+        if (currentPage >= 2) {
+          setCurrentPage(currentPage - 1);
+        }
+      } else {
+        {
+          if (currentPage < totalPage) {
+            setCurrentPage(currentPage + 1);
+          }
         }
       }
-    }
-  };
+    };
 
-  useEffect(() => {
-    const crrPageIndex = currentPage - 1;
-    const startIndex = crrPageIndex * ordersPerPage;
-    console.log(startIndex);
-    console.log(
-      orders.slice(
-        (currentPage - 1) * ordersPerPage,
-        (currentPage - 1) * ordersPerPage + ordersPerPage
-      )
-    );
+    useEffect(() => {
+      const crrPageIndex = currentPage - 1;
+      const startIndex = crrPageIndex * ordersPerPage;
+      console.log(startIndex);
+      console.log(
+        orders.slice(
+          (currentPage - 1) * ordersPerPage,
+          (currentPage - 1) * ordersPerPage + ordersPerPage
+        )
+      );
 
-    // setOrders(orders.slice(startIndex, startIndex + ordersPerPage));
-  }, [currentPage]);
+      // setOrders(orders.slice(startIndex, startIndex + ordersPerPage));
+    }, [currentPage]);
 
-  const onSearch = (e) => {
-    e.preventDefault();
-    let keyword = document.getElementById("search-area").value;
-    if (!keyword || keyword.length === 0) {
-      setOrders(orderData);
-      return;
-    }
-    keyword = keyword.toLowerCase();
-
-    let filters = Object.keys(orderData[0]);
-
-    //--------Search
-    var filtered_data = orderData.filter(function (item) {
-      for (let i = 0; i < filters.length; i++) {
-        switch (typeof item[filters[i]]) {
-          case "string":
-            if (item[filters[i]].toLowerCase().includes(keyword)) {
-              return true;
-            }
-            break;
-          default:
-            if (item[filters[i]] == keyword) {
-              return true;
-            }
-        }
+    const onSearch = (e) => {
+      e.preventDefault();
+      let keyword = document.getElementById("search-area").value;
+      if (!keyword || keyword.length === 0) {
+        setOrders(orderData);
+        return;
       }
-      return false;
-    });
-    setOrders(filtered_data);
-    setCurrentPage(1);
-  };
+      keyword = keyword.toLowerCase();
+
+      let filters = Object.keys(orderData[0]);
+
+      //--------Search
+      var filtered_data = orderData.filter(function (item) {
+        for (let i = 0; i < filters.length; i++) {
+          switch (typeof item[filters[i]]) {
+            case "string":
+              if (item[filters[i]].toLowerCase().includes(keyword)) {
+                return true;
+              }
+              break;
+            default:
+              if (item[filters[i]] == keyword) {
+                return true;
+              }
+          }
+        }
+        return false;
+      });
+      setOrders(filtered_data);
+      setCurrentPage(1);
+    };
 
   return (
     <div>
