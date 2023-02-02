@@ -39,6 +39,8 @@ const Login = () => {
       const accessRight = admins.admin.find((item) => item.username === key);
       if (accessRight?.password === pass) {
         location.replace("/overview");
+        const cookie = `${key}, ${pass}`;
+        localStorage.setItem("login", JSON.stringify(cookie));
       } else {
         setWarning(false);
       }
@@ -112,7 +114,8 @@ const Login = () => {
             warning ? "hidden" : ""
           } flex gap-2 text-red-500 italic font-thin`}
         >
-          <RiErrorWarningLine className="mt-1.5"/> The password was incorrect. Please try again.{" "}
+          <RiErrorWarningLine className="mt-1.5" /> The password was incorrect.
+          Please try again.{" "}
         </div>
 
         <div
@@ -120,7 +123,8 @@ const Login = () => {
             warningUserName ? "hidden" : ""
           } gap-2 flex text-red-500 italic font-thin`}
         >
-          <RiErrorWarningLine className="mt-1"/> Username was incorrect. Please try again.{" "}
+          <RiErrorWarningLine className="mt-1" /> Username was incorrect. Please
+          try again.{" "}
         </div>
       </div>
     </div>
