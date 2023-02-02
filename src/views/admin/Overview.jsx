@@ -98,11 +98,11 @@ const Overview = () => {
           <div className="flex justify-between">
             <Map
               imgUrl="https://www.syncfusion.com/products/react-js2/control/images/maps/react-maps-with-legend-items.png"
-              title="The popularity of the Elysia hotel to the world (2022)"
+              title="The Popularity of the Elysia hotel to the world (2022)"
             />
             <Map
               imgUrl="https://f4n3x6c5.stackpathcdn.com/article/angular-2-or-react-for-decision-makers/Images/Angular2-Vs-React-Popular-Countries.jpg"
-              title="The goal of reaching out to the world (2019 - 2029)
+              title="The Goal of reaching out to the world (2019 - 2029)
 "
             />
           </div>
