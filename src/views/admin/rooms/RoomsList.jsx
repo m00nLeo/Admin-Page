@@ -94,6 +94,33 @@ const RoomsList = () => {
   return (
     <div className=" pl-2 py-6">
       <Container>
+        {/* Modal*/}
+        <input type="checkbox" id="my-modal" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box text-center bg-orange-200 text-black">
+            <h3 className="font-bold text-lg ">
+              Are you sure you want to delete this item?{" "}
+            </h3>
+            <p className="py-4">
+              You are about to delete this file from all of your backups!
+              Deleting this item form this directory cannot be undone.
+            </p>
+            <div className="modal-action">
+              <label
+                htmlFor="my-modal"
+                className="bg-red-400 p-2 rounded-lg hover:bg-red-300 cursor-pointer w-28"
+              >
+                Yes, I'm sure
+              </label>
+              <label
+                htmlFor="my-modal"
+                className="bg-gray-400 p-2 rounded-lg hover:bg-gray-300 cursor-pointer w-28"
+              >
+                Nope
+              </label>
+            </div>
+          </div>
+        </div>
         {/* ACCOUNT INFO */}
         <div className="flex items-center justify-end -translate-x-6">
           <span className=" text-sm font-bold text-teal-600 border-l-gray-200 border-l-2 px-4">
@@ -107,7 +134,7 @@ const RoomsList = () => {
             />
           </div>
         </div>
-        <div className="flex justify-between items-center mb-10">
+        <div className="flex justify-between items-center mb-6">
           <div className="mb-4">
             <form className="flex items-center pl-6">
               <label htmlFor="search-area" className="sr-only">
@@ -137,7 +164,7 @@ const RoomsList = () => {
 
           <Link
             to="/roomslist/addnew"
-            className="text-white text-center p-1 bg-teal-600 rounded-lg cursor-pointer hover:bg-teal-500/50 border w-32 h-10 mr-6"
+            className="text-white text-center p-1.5 bg-teal-600 rounded-lg cursor-pointer hover:bg-teal-500/50 border w-32 h-10 mr-6"
           >
             Add New
           </Link>
@@ -167,19 +194,46 @@ const RoomsList = () => {
                     <div>${item.price}</div>
                   </td>
                   <td className="px-6 py-4 ">
-                    <div className="border text-center text-amber-600 bg-pink-200">
-                      Pending
-                    </div>
+                    <select name="" id="" className="p-1">
+                      <option disabled value="">
+                        State
+                      </option>
+                      <option
+                        selected
+                        value=""
+                        className="border text-center text-white bg-pink-300"
+                      >
+                        Pending
+                      </option>
+                      <option
+                        value=""
+                        className="border text-center text-white bg-red-500"
+                      >
+                        Booked
+                      </option>
+                      <option
+                        value=""
+                        className="border text-center text-white bg-green-400"
+                      >
+                        In-use
+                      </option>
+                      <option
+                        value=""
+                        className="border text-center text-white bg-yellow-400"
+                      >
+                        Reparing
+                      </option>
+                    </select>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 items-center">
                       <div className="group">
                         <div
                           className="hidden tooltip tooltip-open tooltip-success group-hover:block"
                           data-tip="Room Detail"
                         ></div>
                         <Link to="/roomslist/update/:roomid">
-                          <TfiPencil className="cursor-pointer text-2xl text-teal-500 " />
+                          <TfiPencil className="cursor-pointer text-xl text-teal-500 " />
                         </Link>
                       </div>
                       <div className="group">
@@ -187,7 +241,9 @@ const RoomsList = () => {
                           className="hidden tooltip tooltip-open tooltip-error group-hover:block"
                           data-tip="Delete"
                         ></div>
-                        <FiTrash className="cursor-pointer text-xl text-red-500" />
+                        <label htmlFor="my-modal">
+                          <FiTrash className="cursor-pointer text-xl text-red-500" />
+                        </label>
                       </div>
                     </div>
                   </td>
