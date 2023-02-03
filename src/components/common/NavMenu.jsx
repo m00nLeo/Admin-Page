@@ -10,7 +10,7 @@ const NavMenu = () => {
     return <></>;
   } else if (location.pathname === "/orders/:roomid") {
     return (
-      <div className="fixed">
+      <div className="fixed z-10">
         <div className="bg-teal-800 h-screen p-4">
           <img
             className="w-full h-24 mb-8"

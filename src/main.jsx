@@ -15,7 +15,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     {/* Reac - Query */}
     <QueryClientProvider client={queryClient}>
       {/* React-router-dom */}
-      <App router={router}/>
+      {/* <App router={router} /> */}
+      <App />
     </QueryClientProvider>
   </React.StrictMode>
 );
